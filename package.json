@@ -1,0 +1,20 @@
+{
+  "name": "rest-with-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "expressServer.js",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "cors": "^2.7.1",
+    "express": "^4.13.3",
+    "request": "^2.65.0",
+    "mongoose":"^4.4.19 ",
+    "socket.io": "^1.4.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node expressServer.js"
+  },
+  "author": "Federico Fabbri and Poul Cummings",
+  "license": "ISC"
+}
