@@ -8,13 +8,15 @@
     "cors": "^2.7.1",
     "express": "^4.13.3",
     "request": "^2.65.0",
-    "mongoose":"^4.4.19 ",
+    "mongoose": "^4.4.19 ",
     "socket.io": "^1.4.6"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "sockjs": "^0.3.17"
+  },
   "scripts": {
-    "start": "node expressServer.js"
+    "start": "node server.js"
   },
   "author": "Federico Fabbri and Poul Cummings",
-  "license": "ISC"
+  "license": ""
 }

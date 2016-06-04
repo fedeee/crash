@@ -16,4 +16,29 @@ var locationSchema = new mongoose.Schema({
 
 locationSchema.index({ 'loc': '2dsphere' });
 
-mongoose.model( 'Location', locationSchema );
+var Location = mongoose.model( 'Location', locationSchema );
+
+
+//INSERT DOCUMENTS
+/*var myLoc = new Location({
+  id: 2,
+  loc: {
+    type:"Point",
+    coordinates: [-0.086693100,51.464857]}
+});
+
+//save model to MongoDB
+myLoc.save(function (err) {
+  if (err) {
+		return err;
+  }
+  else {
+  	console.log("myLoc saved");
+  }
+});*/
+
+
+Location.find({}, function(error, data){
+    console.log(data);
+    //res.json(data);
+});
