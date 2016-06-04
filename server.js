@@ -7,14 +7,16 @@ var express = require('express'),
 
   require('./config/express')(app);
   require('./config/routes')(app);
-  require('./config/mongodb');
+  var mongo = require('./config/mongodb');
+
 
   var sockjs_opts = {sockjs_url: "http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js"};//TODO:have it locally?
   var sockjs_echo = sockjs.createServer(sockjs_opts);
 
   sockjs_echo.on('connection', function(conn) {
       conn.on('data', function(message) {
-          conn.write(message);
+          mongo.myFunctions[0].update(conn);
+          //conn.write("received");
       });
    });
 

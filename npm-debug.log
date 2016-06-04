@@ -3,11 +3,11 @@
 2 info using npm@2.11.2
 3 info using node@v0.12.5
 4 verbose run-script [ 'prestart', 'start', 'poststart' ]
-5 info prestart rest-with-node@1.0.0
-6 info start rest-with-node@1.0.0
+5 info prestart ash@1.0.0
+6 info start ash@1.0.0
 7 verbose unsafe-perm in lifecycle true
-8 info rest-with-node@1.0.0 Failed to exec start script
-9 verbose stack Error: rest-with-node@1.0.0 start: `node server.js`
+8 info ash@1.0.0 Failed to exec start script
+9 verbose stack Error: ash@1.0.0 start: `node server.js`
 9 verbose stack Exit status 1
 9 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:213:16)
 9 verbose stack     at EventEmitter.emit (events.js:110:17)
@@ -15,21 +15,21 @@
 9 verbose stack     at ChildProcess.emit (events.js:110:17)
 9 verbose stack     at maybeClose (child_process.js:1015:16)
 9 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:1087:5)
-10 verbose pkgid rest-with-node@1.0.0
+10 verbose pkgid ash@1.0.0
 11 verbose cwd /Users/fede/Documents/ash
 12 error Darwin 14.5.0
 13 error argv "node" "/usr/local/bin/npm" "start"
 14 error node v0.12.5
 15 error npm  v2.11.2
 16 error code ELIFECYCLE
-17 error rest-with-node@1.0.0 start: `node server.js`
+17 error ash@1.0.0 start: `node server.js`
 17 error Exit status 1
-18 error Failed at the rest-with-node@1.0.0 start script 'node server.js'.
-18 error This is most likely a problem with the rest-with-node package,
+18 error Failed at the ash@1.0.0 start script 'node server.js'.
+18 error This is most likely a problem with the ash package,
 18 error not with npm itself.
 18 error Tell the author that this fails on your system:
 18 error     node server.js
 18 error You can get their info via:
-18 error     npm owner ls rest-with-node
+18 error     npm owner ls ash
 18 error There is likely additional logging output above.
 19 verbose exit [ 1, true ]
