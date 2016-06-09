@@ -61,7 +61,12 @@ body {
           console.log('[*] open',d);
           var intervalID = window.setInterval(function(){
             sockjs.send("update");
-          }, 2000);
+          }, 5000);
+
+          var findUserMatches = window.setInterval(function(){
+            var userid = 100;
+            sockjs.send("geoIntersect", userid);
+          }, 5000);
         };
 
         function update(data){
@@ -72,10 +77,10 @@ body {
             if(row.length == 0){
                 return;
               }
-              circle = L.circle([row[1],row[0]], 50, {
+              circle = L.circle([row[1],row[0]], 10, {
                   color: 'red',
                   fillColor: '#f03',
-                  fillOpacity: 0.2
+                  fillOpacity: 0.8
               });
               markers.addLayer(circle);
               map.addLayer(markers);

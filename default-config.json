@@ -1,0 +1,7 @@
+{
+	"mongoAppDb"        : {
+		"host" : "localhost",
+		"db"   : "ash",
+		"port": 27017
+	}
+}

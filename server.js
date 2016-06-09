@@ -7,16 +7,27 @@ var express = require('express'),
 
   require('./config/express')(app);
   require('./config/routes')(app);
-  var mongo = require('./config/mongodb');
+  require('./config/mongodb');
 
+  var update = require('./queries/update');
+  var geoIntersect = require('./queries/geo-intersect');
+
+  //require('./queries/populate')(); //TODO Populate db first time
 
   var sockjs_opts = {sockjs_url: "http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js"};//TODO:have it locally?
   var sockjs_echo = sockjs.createServer(sockjs_opts);
 
   sockjs_echo.on('connection', function(conn) {
       conn.on('data', function(message) {
-          mongo.myFunctions[0].update(conn);
-          //conn.write("received");
+        switch (message) {
+          case 'update':
+            update(conn);
+            break;
+          case 'geoIntersect':
+            geoIntersect(conn);
+          break;
+          default:
+        }
       });
    });
 
