@@ -4,34 +4,24 @@ var express = require('express'),
   app = express(),
   http = require('http'),
   server = http.createServer(app);
+  multiplex_server = require('websocket-multiplex');
 
   require('./config/express')(app);
   require('./config/routes')(app);
   require('./config/mongodb');
 
-  var update = require('./queries/update');
   var geoIntersect = require('./queries/geo-intersect');
 
   //require('./queries/populate')(); //TODO Populate db first time
 
-  var sockjs_opts = {sockjs_url: "http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js"};//TODO:have it locally?
-  var sockjs_echo = sockjs.createServer(sockjs_opts);
+  var service = sockjs.createServer();
+  var multiplexer = new multiplex_server.MultiplexServer(service);
 
-  sockjs_echo.on('connection', function(conn) {
-      conn.on('data', function(message) {
-        switch (message) {
-          case 'update':
-            update(conn);
-            break;
-          case 'geoIntersect':
-            geoIntersect(conn);
-          break;
-          default:
-        }
-      });
-   });
+  require('./channels/move.js')(multiplexer);
+  require('./channels/match.js')(multiplexer);
+  require('./channels/randomize.js')(multiplexer);
 
-   sockjs_echo.installHandlers(server, {prefix:'/echo'});
+  service.installHandlers(server, {prefix:'/multiplex'});
 
    console.log(' [*] Listening on 0.0.0.0:9999' );
 

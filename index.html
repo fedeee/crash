@@ -4,6 +4,8 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js"></script>
+    <script src="https://d1fxtkz8shb9d2.cloudfront.net/websocket-multiplex-0.1.js">
+  </script>
 <style>
 
 html, body {
@@ -51,25 +53,41 @@ body {
 
         function updateCoords() {
           // Your code here
+          //moveChannel.send([ [userId], [long, lat] ])
         }
-
-
-        var sockjs_url = '/echo';
-        var sockjs = new SockJS(sockjs_url);
+        function startMatching(){
+          setInterval(function(){
+            matchChannel.send('1'); // USERID == 1
+          }, 4000);
+        };
 
         function onOpen(d){
           console.log('[*] open',d);
-          var intervalID = window.setInterval(function(){
-            sockjs.send("update");
-          }, 5000);
-
-          var findUserMatches = window.setInterval(function(){
-            var userid = 100;
-            sockjs.send("geoIntersect", userid);
-          }, 5000);
         };
 
-        function update(data){
+        var sockjs_url = '/multiplex';
+        var sockjs = new SockJS(sockjs_url);
+        var multiplexer = new WebSocketMultiplex(sockjs);
+
+
+        var simulate  = multiplexer.channel('simulate');
+        simulate.onopen    = function()  {onOpen(sockjs.protocol);};
+        simulate.onclose   = function()  {print('[*] close');};
+        simulate.onmessage = function(e) {simulate(e.data)};
+
+        var moveChannel  = multiplexer.channel('move');
+        moveChannel.onopen    = function()  {onOpen(sockjs.protocol);};
+        moveChannel.onclose   = function()  {print('[*] close');};
+        //moveChannel.onmessage = function(e) {updateCoords()};
+
+
+        var matchChannel  = multiplexer.channel('match');
+        matchChannel.onopen    = function()  {startMatching(sockjs.protocol);};
+        matchChannel.onclose   = function()  {print('[*] close');};
+        matchChannel.onmessage = function(e) {console.log(e)/* MATCH found */};
+
+
+        var simulate = function(data){
           map.removeLayer(markers);
           markers = new L.FeatureGroup();
           var parsed = (JSON.parse(data));
@@ -85,13 +103,9 @@ body {
               markers.addLayer(circle);
               map.addLayer(markers);
           })
-
         };
 
-        sockjs.onopen    = function()  {onOpen(sockjs.protocol);};
-        sockjs.onclose   = function()  {print('[*] close');};
 
-        sockjs.onmessage = function(e) {update( e.data);};
 
 
 

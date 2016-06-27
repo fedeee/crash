@@ -12,7 +12,8 @@
     "mongo-migrate": "^0.1.0"
   },
   "devDependencies": {
-    "sockjs": "^0.3.17"
+    "sockjs": "^0.3.17",
+    "websocket-multiplex": "^0.1.0"
   },
   "scripts": {
     "start": "node server.js"
