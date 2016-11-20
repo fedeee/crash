@@ -15,9 +15,13 @@
     "sockjs": "^0.3.17",
     "websocket-multiplex": "^0.1.0"
   },
+  "repository": {
+        "type": "git",
+        "url": "git+https://github.com/fedeee/mycrash.git"
+    },
   "scripts": {
     "start": "node server.js"
   },
-  "author": "Federico Fabbri and Poul Cummings",
+  "author": "Federico Fabbri",
   "license": ""
 }

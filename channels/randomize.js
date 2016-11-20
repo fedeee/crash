@@ -5,7 +5,7 @@ module.exports = function (multiplexer) {
   var simulate = multiplexer.registerChannel('simulate');
 
   simulate.on('connection', function(conn) {
-    setInterval(function(){randomize(conn)}, 4000);
+    setInterval(function(){randomize(conn)}, 2000);
    });
 
  };
