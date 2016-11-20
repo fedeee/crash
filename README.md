@@ -1,4 +1,4 @@
-## Ash realtime
+## Crash realtime
 A backend for realtime scanning using socket.io and geospatial mongodb
 
 ## How to set up for dev
