@@ -1,8 +1,115 @@
-<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-<script>
-  var socket = io.connect('http://localhost:3000');
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-  });
-</script>
+<!doctype html>
+<html><head>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/sockjs/1.0.1/sockjs.min.js"></script>
+    <script src="https://d1fxtkz8shb9d2.cloudfront.net/websocket-multiplex-0.1.js">
+  </script>
+<style>
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin:0;
+  padding:0;
+}
+
+.mapid {
+  height: 100%;
+  width: 100%;
+  display: table;
+}
+
+</style>
+</head>
+
+
+<body lang="en">
+    <div id="mapid" style="width:1600px;height:900px"></div>
+
+	  <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
+
+    <script>
+
+        var map = new L.Map("mapid", {
+            center: new L.LatLng(51.45, -0.072),
+            zoom: 11
+        });
+        map.addLayer(new L.StamenTileLayer("toner", {
+          detectRetina: true
+        }));
+
+        L.circle([51.28, -0.3], 50, {
+    			color: 'red',
+    			fillColor: '#f03',
+    			fillOpacity: 0.8
+    		}).addTo(map);
+
+        var markers = new L.FeatureGroup();
+
+        function updateCoords() {
+          // Your code here
+          //moveChannel.send([ [userId], [long, lat] ])
+        }
+        function startMatching(){
+          setInterval(function(){
+            matchChannel.send('1'); // USERID == 1
+          }, 4000);
+        };
+
+        function onOpen(d){
+          console.log('[*] open',d);
+        };
+
+        var sockjs_url = '/multiplex';
+        var sockjs = new SockJS(sockjs_url);
+        var multiplexer = new WebSocketMultiplex(sockjs);
+
+
+        var simulate  = multiplexer.channel('simulate');
+        simulate.onopen    = function()  {onOpen(sockjs.protocol);};
+        simulate.onclose   = function()  {print('[*] close');};
+        simulate.onmessage = function(e) {simulate(e.data)};
+
+        var moveChannel  = multiplexer.channel('move');
+        moveChannel.onopen    = function()  {onOpen(sockjs.protocol);};
+        moveChannel.onclose   = function()  {print('[*] close');};
+        //moveChannel.onmessage = function(e) {updateCoords()};
+
+
+        var matchChannel  = multiplexer.channel('match');
+        matchChannel.onopen    = function()  {startMatching(sockjs.protocol);};
+        matchChannel.onclose   = function()  {print('[*] close');};
+        matchChannel.onmessage = function(e) {console.log(e)/* MATCH found */};
+
+
+        var simulate = function(data){
+          map.removeLayer(markers);
+          markers = new L.FeatureGroup();
+          var parsed = (JSON.parse(data));
+          parsed.forEach(function(row){
+            if(row.length == 0){
+                return;
+              }
+              circle = L.circle([row[1],row[0]], 10, {
+                  color: 'red',
+                  fillColor: '#f03',
+                  fillOpacity: 0.8
+              });
+              markers.addLayer(circle);
+              map.addLayer(markers);
+          })
+        };
+
+
+
+
+
+    </script>
+
+
+</body></html>
