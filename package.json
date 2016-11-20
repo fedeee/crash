@@ -1,5 +1,5 @@
 {
-  "name": "rest-with-node",
+  "name": "ash",
   "version": "1.0.0",
   "description": "",
   "main": "expressServer.js",
@@ -8,13 +8,20 @@
     "cors": "^2.7.1",
     "express": "^4.13.3",
     "request": "^2.65.0",
-    "mongoose":"^4.4.19 ",
-    "socket.io": "^1.4.6"
+    "mongoose": "^4.4.19 ",
+    "mongo-migrate": "^0.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "sockjs": "^0.3.17",
+    "websocket-multiplex": "^0.1.0"
+  },
+  "repository": {
+        "type": "git",
+        "url": "git+https://github.com/fedeee/mycrash.git"
+    },
   "scripts": {
-    "start": "node expressServer.js"
+    "start": "node server.js"
   },
-  "author": "Federico Fabbri and Poul Cummings",
-  "license": "ISC"
+  "author": "Federico Fabbri",
+  "license": ""
 }

@@ -16,4 +16,8 @@ var locationSchema = new mongoose.Schema({
 
 locationSchema.index({ 'loc': '2dsphere' });
 
-mongoose.model( 'Location', locationSchema );
+var Location = mongoose.model( 'Location', locationSchema );
+
+module.exports = {
+  Location: Location
+};

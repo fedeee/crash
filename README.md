@@ -9,5 +9,5 @@ A backend for realtime scanning using socket.io and geospatial mongodb
 
 ## How to run
  - npm start
- - open browser to http://localhost:3000/
+ - open browser to http://0.0.0.0:9999/
  - check console
